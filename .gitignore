@@ -1,0 +1,11 @@
+*.pdb
+*.idb
+*.dblite
+*.obj
+*.import
+.vs/*
+.navcache
+*.os
+!.gitignore
+api.json
+.vscode/*
