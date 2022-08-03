@@ -105,7 +105,12 @@ func _physics_process(delta):
 	if Input.is_action_pressed("forward"):
 		throttle_val = 1.0
 	if Input.is_action_pressed("reverse"):
+		$RL.light_energy = 16
+		$RL2.light_energy = 16
 		brake_val = 1.0
+	else:
+		$RL.light_energy = 9
+		$RL2.light_energy = 9
 	if Input.is_action_pressed("steer_left"):
 		steer_val = 1.0
 	elif Input.is_action_pressed("steer_right"):
@@ -142,12 +147,12 @@ func _physics_process(delta):
 	# remember where we are
 	last_pos = translation
 
-#	if not drifting and get_skidding() < 0.25:
-#		drifting = true
-#	if drifting and get_skidding() > 0.25 and steer_angle == 0:
-#		drifting = false
-#
-#	set_traction()
+	if not drifting and get_skidding() < 0.25:
+		drifting = true
+	if drifting and get_skidding() > 0.25 and steer_angle == 0:
+		drifting = false
+
+	set_particles()
 		
 	
 func get_skidding():
@@ -157,19 +162,11 @@ func get_skidding():
 	var w4 = $wheel_frontright.get_skidinfo()
 	return (w1 + w2 + w3 + w4)/4
 	
-func set_traction():
+func set_particles():
 	if drifting:
-		$wheel_backleft.wheel_friction_slip = 0.9
-		$wheel_backright.wheel_friction_slip = 0.9
-		$wheel_frontleft.wheel_friction_slip = 0.55
-		$wheel_frontright.wheel_friction_slip = 0.55
 		$Particles2.emitting = true
 		$Particles3.emitting = true
 	else:
-		$wheel_backleft.wheel_friction_slip = 1.0
-		$wheel_backright.wheel_friction_slip = 1.0
-		$wheel_frontleft.wheel_friction_slip = 1.0
-		$wheel_frontright.wheel_friction_slip = 1.0
 		$Particles2.emitting = false
 		$Particles3.emitting = false
 
